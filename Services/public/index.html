@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<headh>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css" >
+		<script src="script.js"></script>
+	</head>
+
+	<body ng-app="myApp" ng-controller="myCtrl">
+		<form name="contactForm" novalidate>
+			<h1>Simple contact form</h1>
+			<label>Name</label>
+			<input type="text" name="name" ng-model="newContact.Name" required>
+			<span style="color:red" ng-show="contactForm.name.$dirty && contactForm.name.$invalid">
+				<span ng-show="contactForm.$error.required">Name is required.</span>
+			</span>
+			
+			<label>Email</label>
+			<input type="email" name="email" ng-model="newContact.Email" required>
+			<span style="color:red" ng-show="contactForm.email.$dirty && contactForm.email.$invalid">
+				<span ng-show="contactForm.email.$error.required">Email is required.</span>
+				<span ng-show="contactForm.email.$error.email">Email is invalid.</span>
+			</span>
+			
+			<label>Phone</label>
+			<input type="text" ng-model="newContact.Phone">
+			<input type="hidden" ng-model="newContact.id">
+			<br>
+			<input ng-disabled="contactForm.$invalid" type="button" ng-click="doSave()" value="Save">
+		</form>
+		<table >
+			<tr>
+				<th>Name</th><th>Email</th><th>Phone</th><th>Action</th>
+			</tr>
+			<tr ng-repeat="contact in contacts">
+				<td>{{ contact.Name }}</td>
+				<td>{{ contact.Email }}</td>
+				<td>{{ contact.Phone }}</td>
+				<td>
+					<a href="#" ng-click="doEdit(contact.id)">Edit</a> /
+					<a href="#" ng-click="doDelete(contact.id)">Delete</a>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

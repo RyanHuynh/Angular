@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css" >
+</head>
+
+<body>
+
+<div ng-app="myApp" ng-controller="appControl">
+Name: <input type="text" ng-model=selectedItem.Name>
+<span>
+	<select ng-model="selectedItem" ng-options="x as items.indexOf(x) + 1 for x in items">
+	</select>
+</span>
+<span>Filter Name: <input ng-model="nameFilter"> </span>
+<table border="1">
+	<tr>
+		<th>No</th><th>Name</th><th>Country</th>
+	</tr>
+	<tr ng-repeat="x in items | filter:nameFilter | orderBy:'Name'">
+		<td> {{ $index + 1 }}
+		<td> {{ x.Name }}</td>
+		<td> {{ x.Country }} </td>
+	</tr>
+</table>
+
+</div>
+<script src="mainApp.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+
+th {
+	color:white;
+	background:black;
+}
+table tr:nth-child(odd){
+	background:lightblue;
+}
