@@ -1,0 +1,84 @@
+body, ul , li, a, h1{
+	margin: 0;
+	padding:0;
+	color: white;
+	font-weight: bold;
+}
+
+.bkground{
+	min-height: 1000px;
+	padding-top:20vh;
+}
+
+a,li {
+	list-style-type: none;
+	text-decoration: none;
+}
+header{
+	background:black;
+	padding:5px;
+	position: fixed;
+	width: 100vw;
+}
+nav ul {
+	margin:0 auto;
+	width:50%;
+	text-align: center;
+}
+nav ul li{
+	display: inline-block;
+	width: 100px;
+	text-align: center;
+	
+}
+.carColor{
+	background:#FF9326;
+}
+.homeColor{
+	background:#2BD9D0;
+}
+.gameColor{
+	background:#A536D9
+}
+.artColor{
+	background:#38AB1B;
+}
+
+h1{
+	font-size: 50px;
+	text-align: center;
+}
+
+.bkground.ng-enter, .bkground.ng-leave {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+
+
+  width:100%;
+
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index: -999;
+}
+
+.bkground.left-to-right.ng-enter {
+  left:-100%;
+}
+.bkground.left-to-right.ng-enter.ng-enter-active {
+  left:0;
+}
+
+.bkground.right-to-left.ng-enter {
+  left:100%;
+}
+.bkground.right-to-left.ng-enter.ng-enter-active {
+  left:0;
+}
+
+
+.ng-leave.ng-leave-active {
+  left:0;
+}
