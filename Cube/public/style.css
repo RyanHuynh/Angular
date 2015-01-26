@@ -1,0 +1,80 @@
+body{
+	margin: 0;
+}
+
+.mainWrapper{
+	width: 100%;
+	padding-top: 2%;
+}
+
+.contentWrapper{
+	width: 80%;
+	margin: 0 auto;
+}
+#contentWrapper div {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.cube{
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	margin: 5px;
+	vertical-align: top;
+}
+.fade{
+	animation: fade 1.5s;
+	-webkit-animation: fade 1.5s;
+}
+
+.brush{
+	animation: brush 1.5s;
+	-webkit-animation: brush 1.5s;
+}
+.dropIn{
+	animation: dropIn 1s;
+	-webkit-animation: dropIn 1s;
+}
+
+@-webkit-keyframes fade {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+/* Standard syntax */
+@keyframes fade {
+     from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@-webkit-keyframes brush {
+    from {margin-left: -55px;margin-right: 0}
+    to {margin-left: 5px}
+}
+
+/* Standard syntax */
+@keyframes brush {
+     from {margin-left: -55px;margin-right: 0}
+    to {margin-left: 5px}
+}
+
+@-webkit-keyframes dropIn {
+  from {margin-top: -55px}
+    to {margin-top: 5px}
+}
+
+/* Standard syntax */
+@keyframes dropIn {
+     from {margin-top: -55px}
+    to {margin-top: 5px}
+}
+
+
+
+
+
+
+
+
+

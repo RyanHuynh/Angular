@@ -1,0 +1,28 @@
+h1, h2, h3, p {
+	margin: 5px;
+}
+
+section {
+	margin-top:30px;
+}
+
+h2{
+	margin-top: 20px;
+}
+h1.heading {
+	width: 50%;
+	text-align: center;
+	margin: 0 auto;
+}
+
+#isolatedScope div.subSection {
+	display:inline-block;
+	width: 30%;
+	vertical-align: top;
+	margin-right:4%;
+}
+
+#isolatedScope div.subSection:last-child {
+	margin-right:0;
+}
+

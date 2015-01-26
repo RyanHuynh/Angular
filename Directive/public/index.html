@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.9/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.9/angular-animate.js" ></script>
+
+		<link rel="stylesheet" type="text/css" href="style.css" >
+		<link rel="stylesheet" type="text/css" href="animate.css" >
+		<script src="main.js"></script>
+	</head>
+	<body ng-app="myApp" ng-controller="myCtrl" >
+		<h1 class="heading">Some Angular's Directive Demos</h1>
+		
+		<section>
+			<h2>1. Directive with shared scope</h2>
+			<div simple-directive></div>
+		</section>
+
+		<section id="isolatedScope" >
+			<h2>2. Directives with isolated scope.</h2>
+			<div class="subSection">
+				<h3>Local variable with no 2-way binding.</h3>
+				<p>This is value from controller scope : <b>{{ nameList[1].Name }}</b></p>
+				<div directive-with-1-way-binding-scope data='{{ nameList[1].Name }}' ></div>
+			</div>
+			<div class="subSection"> 
+				<h3>Local variable with 2-way binding.</h3>
+				<p>This is value from controller scope : <b>{{ nameList[2].Name }}</b></p>
+				<div directive-with-2-way-binding-scope data='nameList[2].Name'></div>
+			</div>
+			<div class="subSection">
+				<h3>2-way binding local variable with external function.</h3>
+				<p>This is value from controller scope : <b>{{ nameList[3].Name }}</b></p>
+				<div directive-with-function-scope data='nameList[3].Name' action='reset()'></div>
+			</div>
+		</section>
+
+		<section>
+			<h2>3. Directive with simple transclude</h2>
+			<div directive-with-transclude ><p>This section is inner HTML of a directive.</p></div>
+		</section>
+
+		<section>
+			<h2>4. Nested directives.</h2>
+			<grand-parent>
+				<parent pvalue="I'm private.">
+					<child></child>
+				</parent>
+			</grand-parent>
+		</section>
+	</body>
+</html>

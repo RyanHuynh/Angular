@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.9/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.9/angular-animate.js" ></script>
+
+		<link rel="stylesheet" type="text/css" href="style.css" >
+		<!-- <link rel="stylesheet" type="text/css" href="animate.css" > -->
+		<script src="main.js"></script>
+		
+	</head>
+	<body ng-app="myApp" ng-controller='cubeCtrl'>
+		<div class="mainWrapper">
+			<div class="contentWrapper">
+				<form name='animationSelector'>
+					Choose display type:
+					<input type='radio' ng-model='displayChoice' value='full' > Full
+					<input type='radio' ng-model='displayChoice' value='chess'> Chess
+				</form>
+				<form name='animationSelector'>
+					Choose animation type:
+					<input type='radio' ng-model='animationChoice' value='brush' > Brush Stroke
+					<input type='radio' ng-model='animationChoice' value='fade'> Fade
+					<input type='radio' ng-model='animationChoice' value='dropIn'> Drop In
+				</form>
+				<input type='button' value='Generate cubes' ng-click='generateCube()'><br >
+				<div id='placeHolder'></div>
+			</div>
+		</div>
+	</body>
+</html>
