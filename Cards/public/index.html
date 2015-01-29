@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.9/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.9/angular-animate.js" ></script>
+
+		<link rel="stylesheet" type="text/css" href="style.css" >
+		<!-- <link rel="stylesheet" type="text/css" href="foundation.css" > -->
+		<link rel="stylesheet" type="text/css" href="animate.css" >
+		<script src="main.js"></script>
+		
+	</head>
+	<body ng-app="myApp" ng-controller='mainCtrl'>
+		<header><h1>Welcome to guess the cards</h1></header>
+		<div class='mainWrapper'>
+			<div id="gameBox" >
+				<card-generator collections="cardList"></card-generator>
+			</div>
+			<!-- {{ currentState }} -->
+			<div id="statBox">
+				<h2>Statistic</h2>
+				<p>
+					<b>Game played: </b>{{ gamePlayed }}
+				</p>
+				<p>
+					<b>Accuracy: </b>
+				</p>
+				<p style='margin-left: 30px;'>
+					<span style="margin-right: 30px">
+						<b>Last game: </b>{{ lastGameAccuracy }}
+					</span>
+					<span>
+						<b>Overall: </b>{{ overallAccuracy }}
+					</span>
+				</p>
+				<p>
+					<b>Themes :</b>
+				</p>
+				<div style="margin-left:30px">
+					<input type="radio" value="default" ng-model="themeSelection"><small> Default</small>
+				</div>
+				<input type="button" ng-click="newGame()" value="New Game">
+			</div>
+		</div>	
+	</body>
+</html>
