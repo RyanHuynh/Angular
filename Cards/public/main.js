@@ -1,63 +1,86 @@
+
+
 var app = angular.module('myApp' , ['ngAnimate']);
 
-app.controller('mainCtrl', function($scope,$compile){
-    $scope.themeSelection = 'default';
+app.controller('mainCtrl', function($scope,$compile,$http){
+    //Default gane setting
+    $scope.themeSelection = 'Identical';
     $scope.overallAccuracy = '0%';
     $scope.lastGameAccuracy = '0%';
     $scope.gamePlayed = 1;
     $scope.gameInterupted = true;
     var totalClicked = 0;
-
-    //Deck with different themes
-    var defaultDeck = [ { value : "A", background: "img/apple.jpeg", count : 2 },
-                        { value : "B", background: "img/marvel.jpeg", count : 2 },
-                        { value : "C", background: "img/car.jpeg", count : 2 },
-                        { value : "D", background: "img/fun.jpeg", count : 2 },
-                        { value : "E", background: "img/singer.jpeg", count : 2 },
-                        { value : "F", background: "img/kitty.jpeg", count : 2 },
-                        { value : "G", background: "img/puppy.jpeg", count : 2 },
-                        { value : "H", background: "img/school.jpeg", count : 2 }];
-    //Generate card list
-    $scope.cardList = [];
-    var generateCardList = function(theme){
-        var selectedDeck = "";
-        if(theme == "default"){
-            selectedDeck = defaultDeck.slice();
-        }
-        for(i = 0; i < 16; i++){
-            var cardCreated = false;
-            while(!cardCreated){
-                var randomIndex = Math.floor(Math.random() * 8);
-                var newCard = selectedDeck[randomIndex];
-                if(newCard.count > 0){
-                    newCard.count--;
-                    cardCreated = true;
-                    $scope.cardList.push({ value : newCard.value, cover: newCard.background });
-                }
-            }
-        }
-
-        //Reset count for our selected deck
-        for(j = 0; j < selectedDeck.length; j++){
-            selectedDeck[j].count = 2;
-        }
+    var timerDuration = 5;
+    var hasTimer = "false";
+    $scope.newGameBtnDisabled = false;
+    //Attach timer
+    var attachTimer = function(duration){
+        var clock = $compile("<clock btn='newGameBtnDisabled' duration='" + duration + "'></clock>")($scope);
+        var gameBox = angular.element(document.querySelector("div[id='gameBox']"));
+        gameBox.append(clock);
     };
 
+    //Generate our deck
+    $scope.cardList = [];
+    var generateCardList = function(theme, t){
+        $http.get('api/themes/' + theme)
+            .success(function(data){
+                var selectedDeck = data;
+                var arraySize = selectedDeck.length;
+                for(i = 0; i < 16; i++){
+                    var cardCreated = false;
+                    while(!cardCreated){
+                        var randomIndex = Math.floor(Math.random() * arraySize);
+                        var newCard = selectedDeck[randomIndex];
+                        if(newCard.count > 0){
+                            newCard.count--;
+                            cardCreated = true;
+                            $scope.cardList.push({ value : newCard.value, cover: newCard.background });
+                        }
+                    }
+                }
+
+                //Attach game to game box.
+                var game = $compile("<card-generator timer='" + t + "' collections='cardList'></card-generator>")($scope);
+                var gameBox = angular.element(document.querySelector("div[id='gameBox']"));
+                gameBox.append(game);
+            });
+    };
+   
     //Create new game.
     $scope.newGame = function(){
+        //Reset pre-condition for the game.
         $scope.cardList = [];
         if($scope.gameInterupted){
             $scope.lastGameAccuracy = "0%";
         }
+        else{
+              $scope.gamePlayed++;
+              $scope.gameInterupted = true;
+        }
+           
+        //Attach timer for the game.
+        if ($scope.themeSelection == 'Shape'){
+             attachTimer(timerDuration);
+             hasTimer = "true";
+        }
         else
-             $scope.gamePlayed++;
-       
-        var gameBox = angular.element(document.querySelector("div[id='gameBox']"));
-        var oldGame = angular.element(document.querySelector("card-generator"));
-        generateCardList($scope.themeSelection);
-        var game = $compile("<card-generator collections='cardList'></card-generator>")($scope);
-        oldGame.replaceWith(game);
-        $scope.gameInterupted = true;
+            hasTimer = "false";
+           
+        //Remove old game.
+        var querySelector = document.querySelector("card-generator");
+        if(querySelector != null)
+        {
+            var oldGame = angular.element(document.querySelector("card-generator"));
+            //oldGame.scope().$destroy();
+            oldGame.remove();
+        }
+        //oldGame.children().remove();
+        //alert(oldGame.scope().currentState);
+        //oldGame.remove();
+
+        //Create new game board.
+        generateCardList($scope.themeSelection, hasTimer);
     };
 
     //Update accuracy
@@ -66,15 +89,16 @@ app.controller('mainCtrl', function($scope,$compile){
         totalClicked += accuracy;
         $scope.overallAccuracy = Math.floor((16 * $scope.gamePlayed / totalClicked) * 100) + "%";
     };
-    generateCardList($scope.themeSelection);
+   $scope.newGame();
 });
 
 app.directive('cardGenerator', function(){
     return{
         scope: {
-            collections: '='
+            collections: '=',
+            timer: '@'
         },
-        template: "<card ng-repeat='card in collections'  index='{{ $index }}' data='card'></card>",
+        template: "<card timer='{{ timer }}' ng-repeat='card in collections' index='{{ $index }}' data='card'></card>",
         controller : function($scope){
 
             //Default state of game start at 1.
@@ -87,7 +111,11 @@ app.directive('cardGenerator', function(){
             var matchedPairCount = 8;
             var cardClicked = 0;
             this.locked = false;
-
+           
+            //Check to see if timer is in used
+            this.useTimer = function(){
+                return ($scope.hasTimer == "true") ? true : false;
+            }
             //Return current state of game board.
             this.getState = function(){
                 return $scope.currentState;
@@ -152,13 +180,16 @@ app.directive('card', function(){
     return {
         require : '^?cardGenerator',
         scope: {
-            data : '='
+            data : '=', 
+            timer : '@'
         },
         template:  "<front style='background-image: url({{ data.cover }})'></front>" +
                     "<back></back>",
         link : function(scope, element, attrs, cardGenCtrl){
+            //Flipped all card if timer is in used.
+            if(scope.timer == "true")
+                element.toggleClass('flipped');
             element.bind('click', function(){
-
                 //Disable lock to allow only 2 cards to be flipped at a time.
                 if(!cardGenCtrl.locked){
                     //Update click to calculate accuracy.
@@ -188,7 +219,7 @@ app.directive('card', function(){
                                     element.toggleClass('flipped');
                                     cardGenCtrl.setState('1');  
                                     cardGenCtrl.locked = false;
-                                }, 1000);
+                                }, 1500);
                            }
                         }
                     }
@@ -197,3 +228,44 @@ app.directive('card', function(){
         }
     }
 });
+
+app.directive('clock', function($timeout){
+    return {
+        scope:{ 
+            duration: '@',
+            btn: '='
+        },
+        controller: function($scope){
+            $scope.timeout = $scope.duration;
+        },
+        template: "<h1 class='bounceInDown animated'>{{ timeout }}</h1>",
+        link: function(scope, element,attrs){
+            //New game button (disable this button when timer is running)
+            scope.btn = true;
+            //newGameBtn.prop('ng-disabled', 'true');
+            var countdown = function(){
+                scope.timeout--;
+                if(scope.timeout > 0)
+                    $timeout(countdown, 1000);
+                else{
+                    //Flipped all card down.
+                angular.element(document.querySelector("card-generator")).children().toggleClass('flipped');
+                    //Turn new game button back on.
+                    scope.btn = false;
+                    element.remove();
+                }
+                    
+            };
+            $timeout(countdown, 1000);
+        }
+    }
+});
+
+
+
+
+
+
+
+
+

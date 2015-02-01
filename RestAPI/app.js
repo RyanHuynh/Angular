@@ -29,29 +29,29 @@ var Schema = mongoose.Schema;
 var ThemeSchema = new Schema({
 	data : [{id: Number,  value : String , background : String, count: Number }]
 });
-//Define model for each type of themes
-var Identical = mongoose.model('Identical', ThemeSchema);
-var FaceName = mongoose.model('FaceName', ThemeSchema);
 
 router.route('/themes/:theme_type')
 	.post(function(req, res){
-		var type = req.params.theme_type;
-		var theme = "";
-		if(type == "identical"){
-			theme = new Identical();
-		}
-		else if(type == "facename"){
-			theme = new FaceName();
-		}
+		//Define our model with theme
+		var Model = mongoose.model(req.params.theme_type, ThemeSchema);
+		var theme = new Model ();
 
-		theme.data = [  { value : "1", background: "img/Themes/Identical/sanimals/bunny.jpg", count : 2 },
-                        { value : "2", background: "img/Themes/Identical/sanimals/chicken.jpeg", count : 2 },
-                        { value : "3", background: "img/Themes/Identical/sanimals/hedgehog.jpeg", count : 2 },
-                        { value : "4", background: "img/Themes/Identical/sanimals/panda.jpg", count : 2 },
-                        { value : "5", background: "img/Themes/Identical/sanimals/squirrel.jpg", count : 2 },
-                        { value : "6", background: "img/Themes/Identical/sanimals/kitty.jpeg", count : 2 },
-                        { value : "7", background: "img/Themes/Identical/sanimals/puppy.jpeg", count : 2 },
-                        { value : "8", background: "img/Themes/Identical/sanimals/tiger.jpeg", count : 2 }];
+		theme.data = [  { value : "1", background: "img/Themes/Shape/shape2/a1.jpg", count : 1 },
+                        { value : "1", background: "img/Themes/Shape/shape2/a2.jpg", count : 1 },
+                        { value : "2", background: "img/Themes/Shape/shape2/b1.jpg", count : 1 },
+                        { value : "2", background: "img/Themes/Shape/shape2/b2.jpg", count : 1 },
+                        { value : "3", background: "img/Themes/Shape/shape2/c1.jpg", count : 1 },
+                        { value : "3", background: "img/Themes/Shape/shape2/c2.jpg", count : 1 },
+                        { value : "4", background: "img/Themes/Shape/shape2/d1.jpg", count : 1 },
+                        { value : "4", background: "img/Themes/Shape/shape2/d2.jpg", count : 1 },
+						{ value : "5", background: "img/Themes/Shape/shape2/e1.jpg", count : 1 },
+                        { value : "5", background: "img/Themes/Shape/shape2/e2.jpg", count : 1 },
+                        { value : "6", background: "img/Themes/Shape/shape2/f1.jpg", count : 1 },
+                        { value : "6", background: "img/Themes/Shape/shape2/f2.jpg", count : 1 },
+                        { value : "7", background: "img/Themes/Shape/shape2/g1.jpg", count : 1 },
+                        { value : "7", background: "img/Themes/Shape/shape2/g2.jpg", count : 1 },
+                        { value : "8", background: "img/Themes/Shape/shape2/h1.jpg", count : 1 },
+                        { value : "8", background: "img/Themes/Shape/shape2/h2.jpg", count : 1 }];
 
 		//save the theme
 		theme.save(function(err){
@@ -62,7 +62,8 @@ router.route('/themes/:theme_type')
 		});	
 	})
 	.get(function(req, res){
-		Identical.find(function(err, themes){
+		var Theme = mongoose.model(req.params.theme_type, ThemeSchema);
+		Theme.find(function(err, themes){
 			if(err)
 				res.send(err);
 			res.json(themes);

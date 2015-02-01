@@ -15,9 +15,9 @@
 		<header><h1>Welcome to guess the cards</h1></header>
 		<div class='mainWrapper'>
 			<div id="gameBox" >
-				<card-generator collections="cardList"></card-generator>
+				
 			</div>
-			<!-- {{ currentState }} -->
+			
 			<div id="statBox">
 				<h2>Statistic</h2>
 				<p>
@@ -38,9 +38,12 @@
 					<b>Themes :</b>
 				</p>
 				<div style="margin-left:30px">
-					<input type="radio" value="default" ng-model="themeSelection"><small> Default</small>
+					<input type="radio" value="Identical" ng-model="themeSelection"><small>Mirror  Images</small><br >
+					<input type="radio" value="Name" ng-model="themeSelection"><small>Name  that  Image</small><br >
+					<input type="radio" value="Shape" ng-model="themeSelection"><small>Shape  to  Shape</small>
 				</div>
-				<input type="button" ng-click="newGame()" value="New Game">
+				<input ng-disabled='newGameBtnDisabled' id="newGameBtn" type="button" ng-click="newGame()" value="New Game">
+
 			</div>
 		</div>	
 	</body>
