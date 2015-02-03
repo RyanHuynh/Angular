@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 //Initialze app
 var app = express();
 var router = express.Router();
-var port = process.env.PORT || 2000;
+var port = process.env.PORT || 3000;
 mongoose.connect('mongodb://localhost:27017/card-collections');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended : true }));
@@ -25,7 +25,7 @@ var Name = mongoose.model('Name', ThemeSchema);
 				
 //Define our API
 app.use('/api', router);
-router.route('/themes/:theme_type')
+router.route('/themes/:theme_type/:theme_index')
 	.get(function(req, res){
 		//Set theme type to correct model
 		var Theme = mongoose.model(req.params.theme_type, ThemeSchema);
@@ -40,10 +40,12 @@ router.route('/themes/:theme_type')
 		Theme.find(function(err, themes){
 			if(err)
 				res.send(err);
-			
-			var randomIndex = Math.floor(Math.random() * totalEntries);
-			//console.log(randomIndex);
-			res.json(themes[randomIndex].data); //2 is bad
+			var randomIndex = 1;
+			do {
+				randomIndex = Math.floor(Math.random() * totalEntries);
+			} while ( randomIndex == req.params.theme_index);
+			var result = { theme : themes[randomIndex].data, themeIndex : randomIndex};
+			res.json(result); 
 		});
 	});
 

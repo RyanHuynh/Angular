@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+<script src="main.js"></script>
+</head>
+
+<body ng-app="myApp" ng-controller='myCtrl'>
+	<input type='radio' ng-model='themeType' value='Identical'> Identical 
+	<input type='radio' ng-model='themeType' value='Name'> Name
+	<input type='radio' ng-model='themeType' value='Shape'> Shape <br >
+	Theme Name: <input type="text" ng-model="themeName">
+	<input type="button" ng-click='saveTheme()' value="Save Theme">
+
+
+</body>
+</html>
