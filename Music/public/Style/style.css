@@ -142,7 +142,7 @@ note {
 	position: absolute;
 	width: 11%;
 	height: 31.5%;
-	background: url('img/Misc/extraline.png') no-repeat;
+	background: url('../img/Misc/extraline.png') no-repeat;
 	background-size: 100% 100%;
 }
 answer{

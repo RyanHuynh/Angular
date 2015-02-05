@@ -99,7 +99,7 @@ back{
 clock {
 	width: 100%;
 	position: absolute;
-	z-index: 5;
+	z-index: 500;
 	margin-top: 40%;
 }
 clock h1{

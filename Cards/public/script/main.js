@@ -10,7 +10,7 @@ app.controller('mainCtrl', function($scope,$compile,$http, GameService){
     $scope.gamePlayed = 1;
     $scope.gameInterupted = true;
     var totalClicked = 0;
-    var timerDuration = 10;
+    var timerDuration = 1000;
     var hasTimer = "false";
     var previousThemeIndex = 1;
     
