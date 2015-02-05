@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var app = express();
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 2000;
 var router = express.Router();
 
 mongoose.connect('mongodb://localhost:27017/card-collections');

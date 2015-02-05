@@ -212,6 +212,7 @@ app.directive('card', function(GameService){
         template:  "<front style='background-image: url({{ data.cover }})'></front>" +
                     "<back></back>",
         link : function(scope, element, attrs, cardGenCtrl){
+
             //Flipped all card if timer is in used.
             if(scope.timer == "true")
                 element.toggleClass('flipped');
