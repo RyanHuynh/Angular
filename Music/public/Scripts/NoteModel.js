@@ -1,6 +1,11 @@
-app.service('NoteService', function(){
+/* Note Model : transport Note/Chord model to services. */
+app.service('NoteModel', function(){
 
-	//Get resource
+	/************************************
+	 *			  RESOURCES	    		*
+	 ************************************/
+
+	//Note models.
 	var C = {	Name: "C",
 				Accidential : "none",
 				Key: ["C", "G", "F", "Bb", "Eb", "Ab", "Db"],
@@ -20,15 +25,15 @@ app.service('NoteService', function(){
 	var Db = {	Name: "Db",
 				Accidential : "f",
 				Key: ["Ab", "Db", "Gb"],
-				CoorY: { G: [38,23,7.5] , F : [42.7,31,11.5] }};
+				CoorY: { G: [38,23,7.5] , F : [42.7,27,11.5] }};
 	var D = {	Name: "D",
 				Accidential : "none",
 				Key: ["C", "G", "D", "A", "F", "Bb", "Eb"],
-				CoorY: { G: [38,23,7.5] , F : [42.7,31,11.5] }};
+				CoorY: { G: [38,23,7.5] , F : [42.7,27,11.5] }};
 	var Ds = {	Name: "Ds",
 				Accidential : "s",
 				Key: ["E", "B", "Fs"],
-				CoorY: { G: [38,23,7.5] , F : [42.7,31,11.5] }};
+				CoorY: { G: [38,23,7.5] , F : [42.7,27,11.5] }};
 	var Eb = { 	Name: "Eb",
 				Accidential : "f",
 				Key: ["Bb", "Eb", "Ab", "Db", "Gb"],
@@ -84,27 +89,110 @@ app.service('NoteService', function(){
 	var B = { 	Name: "B",
 				Accidential : "none",
 				Key: ["C", "G", "D", "A", "E", "B"],
-				CoorY: { G: [42.7,31,11.5] , F : [48,31,16] }};
+				CoorY: { G: [42.7,27,11.5] , F : [48,31,16] }};
 	var Bb = { 	Name: "Bb",
 				Accidential : "f",
 				Key: ["F", "Bb", "Eb", "Ab", "Db", "Gb"],
-				CoorY: { G: [42.7,31,11.5] , F : [47.5,31,16] }};
+				CoorY: { G: [42.7,27,11.5] , F : [47.5,31,16] }};
 	var Bs = { 	Name: "Bs",
 				Accidential : "s",
 				Key: [],
-				CoorY: { G: [42.7,31,11.5] , F : [47.5,31,16] }};
+				CoorY: { G: [42.7,27,11.5] , F : [47.5,31,16] }};
 	var Bbb = { Name: "Bbb",
 				Accidential : "bb",
 				Key: [],
 				CoorY: { G: [42.7,31,11.5] , F : [47.5,31,16] }};
-	var noteList = [C, Cb, Cs, Cx, Db, D, Ds, Eb, E, Es, F, Fs, Fx, Fb, Gb, G, Gs, Ab, A, As, B, Bb, Bs, Bbb];
+	var _noteList = [C, Cb, Cs, Cx, Db, D, Ds, Eb, E, Es, F, Fs, Fx, Fb, Gb, G, Gs, Ab, A, As, B, Bb, Bs, Bbb];
 
+	//Chord Model.
+	var _chordList = [ 	{ Name: "CM",
+						Notes : ["C","E","G"] },
+						{ Name: "CsM",
+						Notes : ["Cs","Es","Gs"] },
+						{ Name: "DbM",
+						Notes : ["Db","F","Ab"] },
+						{ Name: "DM",
+						Notes : ["D","Fs","A"] },
+						{ Name: "DsM",
+						Notes : ["Ds","Fx","As"] },
+						{ Name: "EbM",
+						Notes : ["Eb","G","Bb"] },
+						{ Name: "EM",
+						Notes : ["E","Gs","B"] },
+						{ Name: "FM",
+						Notes : ["F","A","C"] },
+						{ Name: "FsM",
+						Notes : ["Fs","As","Cs"] },
+						{ Name: "GbM",
+						Notes : ["Gb","Bb","Db"] },
+						{ Name: "GM",
+						Notes : ["G","B","D"] },
+						{ Name: "GsM",
+						Notes : ["Gs","Bs","Ds"] },
+						{ Name: "AbM",
+						Notes : ["Ab","C","Eb"] },
+						{ Name: "AM",
+						Notes : ["A","Cs","E"] },
+						{ Name: "AsM",
+						Notes : ["As","Cx","Es"] },
+						{ Name: "BbM",
+						Notes : ["Bb","D","F"] },
+						{ Name: "BM",
+						Notes : ["B","Ds","Fs"] },
+
+						{ Name: "Cmin",
+						Notes : ["C","Eb","G"] },
+						{ Name: "Csmin",
+						Notes : ["Cs","E","Gs"] },
+						{ Name: "Dbmin",
+						Notes : ["Db","Fb","Ab"] },
+						{ Name: "Dmin",
+						Notes : ["D","F","A"] },
+						{ Name: "Dsmin",
+						Notes : ["Ds","Fs","As"] },
+						{ Name: "Ebmin",
+						Notes : ["Eb","Gb","Bb"] },
+						{ Name: "Emin",
+						Notes : ["E","G","B"] },
+						{ Name: "Fmin",
+						Notes : ["F","Ab","C"] },
+						{ Name: "Fsmin",
+						Notes : ["Fs","A","Cs"] },
+						{ Name: "Gbmin",
+						Notes : ["Gb","Bbb","Db"] },
+						{ Name: "Gmin",
+						Notes : ["G","Bb","D"] },
+						{ Name: "Abmin",
+						Notes : ["Ab","Cb","Eb"] },
+						{ Name: "Amin",
+						Notes : ["A","C","E"] },
+						{ Name: "Asmin",
+						Notes : ["As","Cs","Es"] },
+						{ Name: "Bbmin",
+						Notes : ["Bb","Db","F"] },
+						{ Name: "Bmin",
+						Notes : ["B","D","Fs"] }];
+
+	//Return Note with input name.
 	this.getNoteWithName = function(noteName){
 		var result = "";
-		for(i = 0; i < noteList.length; i++){
-			var note = noteList[i];
+		for(i = 0; i < _noteList.length; i++){
+			var note = _noteList[i];
 			if(note.Name == noteName){
 				result = note;
+				break;
+			}
+		}
+		return result;
+	};
+
+	//return Chord with input chord name.
+	this.getChordWithName = function(chordName){
+		var result = "";
+		for(i = 0; i < _chordList.length; i++){
+			var chord = _chordList[i];
+			if(chord.Name == chordName){
+				result = chord;
 				break;
 			}
 		}

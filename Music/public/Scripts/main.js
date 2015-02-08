@@ -1,12 +1,16 @@
 var app = angular.module('myApp', []);
 
+/****************************************
+ *			 MAIN CONTROLLER 		   	*
+ ****************************************/
 app.controller('mainCtrl', function($scope,$compile, NameNoteService, ChordService, GameControlService){
+	
 	var _category = "Note";
-	$scope.testing = GameControlService.test;
 	$scope.nextQuestionSwitch = false;
+	
+	//Check Answer respond and render respond to UI.
 	$scope.checkRespond = function(){
 		var respond = GameControlService.getQuestionRespond();
-		//console.log(respond);
 		var respondBox = angular.element(document.querySelector("div[id='respondBox']"));
 		respondBox.append($compile(respond)($scope));
 
@@ -19,6 +23,8 @@ app.controller('mainCtrl', function($scope,$compile, NameNoteService, ChordServi
 		//Disable all answer buttons.
 		angular.element(document.querySelector("div[id='answerBox']")).children().off('click');
 	}
+
+	//Routine run for "Note" game mode.
 	var NameNoteRun = function(){
 		var questionBox = angular.element(document.querySelector('div[id=questionBox]'));
 
@@ -42,6 +48,7 @@ app.controller('mainCtrl', function($scope,$compile, NameNoteService, ChordServi
 		}
 	};
 
+	//Routine run for "Chord" game mode.
 	var ChordRun = function(){
 		var questionBox = angular.element(document.querySelector('div[id=questionBox]'));
 		
@@ -64,7 +71,9 @@ app.controller('mainCtrl', function($scope,$compile, NameNoteService, ChordServi
 			answerBox.append($compile(answerSet[i])($scope));
 		}
 	};
-	$scope.next = function(){
+
+	//Construct new question.
+	$scope.nextQuestion = function(){
 		var nextBtn = angular.element(document.querySelector('div[id=nextQuestion]'));
 		nextBtn.addClass('animated fadeOutDown');
 		
@@ -73,27 +82,38 @@ app.controller('mainCtrl', function($scope,$compile, NameNoteService, ChordServi
 		questionBox.children().remove();
 
 		GameControlService.gameStart();
+		//Random game mode for now.
+		var temp = ["Note", "Chord"];
+		_category = temp[Math.floor(Math.random() * 2)];
 		if(_category == "Note")
 			NameNoteRun();
 		else
 			ChordRun();
 
 		//Add question text.
-		questionBox.append("<p>The note is .... </p>");
+		questionBox.append(GameControlService.getQuestionText(_category));
+
+		//
 		setTimeout(function(){
 			nextBtn.removeClass('animated fadeOutDown');
-			//$scope.nextQuestionSwitch  = false;
+			$scope.nextQuestionSwitch  = false;
 			$scope.$apply();
 		}, 1000);
 		//nextBtn.removeClass('animated fadeOutDown');
-	}
+	};
+
+	//Switch to new category.
 	$scope.switchCategory = function(newCat){
 		_category = newCat;
 		$scope.next();
-	}
-	$scope.next();
+	};
 
+	$scope.nextQuestion();
 });
+
+/****************************************
+ *		  UI ELEMENT DIRECTIVES 	   	*
+ ****************************************/
 app.directive('note', function(GameControlService){
 	return{
 		scope: {
@@ -133,7 +153,8 @@ app.directive('answer', function(GameControlService){
 			element.bind('click', function(){
 				GameControlService.isCorrectAnswer(attrs.value);	
 				scope.checkRespond();
-				element.addClass('animated rotateOutDownLeft');
+				element.addClass('animated rotateOutDownLeft')
+				//element.addClass('animated hinge');;
 			});	
 
 		}
@@ -173,7 +194,11 @@ app.directive('key', function(){
 	}
 });
 
-//
+/****************************************
+ *		   CSS CLASS DIRECTIVES	 	  	*
+ ****************************************/
+
+ //This class to make sure question has a fixed size ratio.
 app.directive('questionBoxSize',function(){
 	return {
 		restrict: 'C',

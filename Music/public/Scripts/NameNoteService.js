@@ -1,15 +1,24 @@
-app.service('NameNoteService', function(NoteService, GameControlService){
-	//
+/* Note Service: Handles "Note" game mode functionality */
+app.service('NameNoteService', function(NoteModel, GameControlService){
+	
+	/****************************************
+	 *				 VARIABLES		    	*
+	 ****************************************/
+
 	var _noteNameList = ["C", "Cs", "Db", "D", "Ds", "Eb", "E", "F", "Fs", "Gb", "G", "Gs", "Ab", "A", "As", "B", "Bb"];
 	var clefUsed = "";
 	var keyUsed = "";
 	var _correctAnswerIndex = "";
-	var noteList = NoteService.getNote
-	//
+	
+	/****************************************
+	 *			COMMON FUNCTIONS		   	*
+	 ****************************************/
+
+	//Get a random question.
 	this.getQuestion = function(){
 		var randomIndex = Math.floor(Math.random() * _noteNameList.length);
 		var noteName = _noteNameList[randomIndex];
-		var choosenNote = NoteService.getNoteWithName(noteName);
+		var choosenNote = NoteModel.getNoteWithName(noteName);
 
 		//Choose Clef
 		clefUsed = GameControlService.getClefUsed();
@@ -36,15 +45,14 @@ app.service('NameNoteService', function(NoteService, GameControlService){
 		return note;
 	}
 
-	//
+	//Return key signature used for this question.
 	this.getKey = function(){
 		var key = "<key value=" + keyUsed + " clef=" + clefUsed + " ></key>";
 		return key;
 	}
 
-	//
+	//Construct a random answer set.
 	this.getAnswerSet = function(){
-
 		var resultSet = [];
 
 		//Get 3 wrong answers
@@ -64,12 +72,4 @@ app.service('NameNoteService', function(NoteService, GameControlService){
 		return resultSet;
 
 	}
-
-	this.checkAnswer = function(value){
-		if(value == correctAnswer){
-			return true;
-		}
-		else
-			return false;
-	};	
 });

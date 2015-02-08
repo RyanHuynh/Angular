@@ -6,8 +6,8 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.9/angular.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="Style/style.css" >
 		<link rel="stylesheet" type="text/css" href="Style/animate.css" >
-		<script src="/Scripts/main.js"></script>
-		<script src="/Scripts/NoteService.js"></script>
+		<script src="/Scripts/Main.js"></script>
+		<script src="/Scripts/NoteModel.js"></script>
 		<script src="/Scripts/ChordService.js"></script>
 		<script src="/Scripts/NameNoteService.js"></script>	
 		<script src="/Scripts/GameControlService.js"></script>		
@@ -19,9 +19,9 @@
 				<div id="answerBox"></div>
 			</div>
 			<div id="respondBox">
-				<div id="nextQuestion" ng-click='next()' class='bounceIn' ng-show='nextQuestionSwitch'></div>
+				<div id="nextQuestion" ng-click='nextQuestion()' class='customBounce' ng-show='nextQuestionSwitch'></div>
 			</div>
 		</div>
-		<footer><small>Designed by Ryan Huynh. All rights reserved.</small></footer>
+		<footer><small>Designed and created by Ryan Huynh. Copyright &copy; 2015.</small></footer>
 	</body>
 </html>

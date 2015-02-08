@@ -29,11 +29,11 @@ time, mark, audio, video {
     background:transparent;
     list-style: none;
 }
-body {
+html {
     line-height:1;
     background: url('../img/Misc/background.jpg') no-repeat;
     background-size: 100% 100%;
-    height:95vh;
+    height: 98%;
 }
 article,aside,details,figcaption,figure,
 footer,header,hgroup,menu,nav,section {
@@ -207,7 +207,7 @@ input[type='button']{
 @media only screen and (min-width:786px){
 	.mainWrapper{
 		width: 80%;
-		margin: 20px auto;
+		margin: 20px auto 0 auto;
 	}
 	#answerBox{
 		width: 90%;
@@ -236,6 +236,89 @@ input[type='button']{
 		top:39%;
 		left:82%;
 		cursor: pointer;
+	}
+	.customBounce{
+		-webkit-animation-duration: 6s;
+      	animation-duration: 6s;
+     	-webkit-animation-name: cBounce;
+      	animation-name: cBounce;
+      	-webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
+    	animation-iteration-count: infinite;
+	}
+
+	@-webkit-keyframes cBounce {
+		0%, 3.3%, 6.6%, 9.9% , 13.2% 16.5% {
+		-webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+		        transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+		}
+		0% {
+		-webkit-transform: scale3d(.6, .6, .6);
+		        transform: scale3d(.6, .6, .6);
+		}
+		3.3% {
+		-webkit-transform: scale3d(1.1, 1.1, 1.1);
+		        transform: scale3d(1.1, 1.1, 1.1);
+		}
+
+		6.6% {
+		-webkit-transform: scale3d(.9, .9, .9);
+		        transform: scale3d(.9, .9, .9);
+		}
+
+		9.9% {
+
+		-webkit-transform: scale3d(1.03, 1.03, 1.03);
+		        transform: scale3d(1.03, 1.03, 1.03);
+		}
+
+		13.2% {
+		-webkit-transform: scale3d(.97, .97, .97);
+		        transform: scale3d(.97, .97, .97);
+		}
+
+		16.5% {
+
+		-webkit-transform: scale3d(1, 1, 1);
+		        transform: scale3d(1, 1, 1);
+		}
+	}
+
+	@keyframes cBounce {
+		0%, 3.3%, 6.6%, 9.9% , 13.2% 16.5% {
+		-webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+		        transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+		}
+		0% {
+
+		-webkit-transform: scale3d(.6, .6, .6);
+		        transform: scale3d(.6, .6, .6);
+		}
+		3.3% {
+		-webkit-transform: scale3d(1.1, 1.1, 1.1);
+		        transform: scale3d(1.1, 1.1, 1.1);
+		}
+
+		6.6% {
+		-webkit-transform: scale3d(.9, .9, .9);
+		        transform: scale3d(.9, .9, .9);
+		}
+
+		9.9% {
+
+		-webkit-transform: scale3d(1.03, 1.03, 1.03);
+		        transform: scale3d(1.03, 1.03, 1.03);
+		}
+
+		13.2% {
+		-webkit-transform: scale3d(.97, .97, .97);
+		        transform: scale3d(.97, .97, .97);
+		}
+
+		16.5% {
+	
+		-webkit-transform: scale3d(1, 1, 1);
+		        transform: scale3d(1, 1, 1);
+		}
 	}
 }
 
