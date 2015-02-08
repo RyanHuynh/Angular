@@ -20,14 +20,14 @@ app.service('GameControlService', function(){
 	var _wrongRespond = "W";
 
 	//Variable used for adding extra bar.
-	var _topFirstThreshold = 16;
-	var _topSecondThreshold = 11;
-	var _bottomFirstThreshold = 39;
-	var _bottomSecondThreshold = 44;
-	var _firstTopBarYCoor = '21.5%';
-	var _secondTopBarYCoor = '17%';
-	var _firstBottomBarYCoor = '47.5%';
-	var _secondBottomBarYCoor = '52%'
+	var _topFirstThreshold = 30.5;
+	var _topSecondThreshold = 26;
+	var _bottomFirstThreshold = 55;
+	var _bottomSecondThreshold = 63;
+	var _firstTopBarYCoor = '35.5%';
+	var _secondTopBarYCoor = '30.9%';
+	var _firstBottomBarYCoor = '64.5%';
+	var _secondBottomBarYCoor = '68.7%'
 
 	/****************************************
 	 *				GAME CONTROL			*

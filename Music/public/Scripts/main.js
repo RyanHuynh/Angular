@@ -180,7 +180,7 @@ app.directive('key', function(){
 		},
 		link: function(scope, element){
 			if(scope.clef == "F")
-				element.css('top', '6%');
+				element.css('top', '5%');
 			element.css('background-image', 'url(img/Key/' + scope.value + '.png)');
 		}
 	}
