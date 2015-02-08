@@ -87,7 +87,7 @@ app.service('GameControlService', function(){
 		return _noteDuration;
 	};
 	this.getQuestionText = function(category){
-		var result = "<p>The " + category + " is ?</p>"
+		var result = "<p>" + category + "</p>"
 		return result;
 	};
 

@@ -74,9 +74,8 @@ app.controller('mainCtrl', function($scope,$compile, NameNoteService, ChordServi
 
 	//Construct new question.
 	$scope.nextQuestion = function(){
-		var nextBtn = angular.element(document.querySelector('div[id=nextQuestion]'));
-		nextBtn.addClass('animated fadeOutDown');
-		
+		$scope.nextQuestionSwitch  = false;
+
 		//Clear out the question box.
 		var questionBox = angular.element(document.querySelector('div[id=questionBox]'));
 		questionBox.children().remove();
@@ -93,13 +92,6 @@ app.controller('mainCtrl', function($scope,$compile, NameNoteService, ChordServi
 		//Add question text.
 		questionBox.append(GameControlService.getQuestionText(_category));
 
-		//
-		setTimeout(function(){
-			nextBtn.removeClass('animated fadeOutDown');
-			$scope.nextQuestionSwitch  = false;
-			$scope.$apply();
-		}, 1000);
-		//nextBtn.removeClass('animated fadeOutDown');
 	};
 
 	//Switch to new category.
