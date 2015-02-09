@@ -115,7 +115,7 @@ app.controller('mainCtrl', function($scope,$compile,$http, GameService){
         totalClicked += accuracy;
         $scope.overallAccuracy = Math.floor((16 * $scope.gamePlayed / totalClicked) * 100) + "%";
     };
-   $scope.newGame();
+    $scope.newGame();
 });
 
 app.directive('cardGenerator', function(){
@@ -124,7 +124,7 @@ app.directive('cardGenerator', function(){
             collections: '=',
             timer: '@'
         },
-        template: "<card timer='{{ timer }}' ng-repeat='card in collections' index='{{ $index }}' data='card'></card>",
+        template: "<card timer='{{ timer }}' ng-repeat='card in collections' index='{{ $index }}' data='card' class='squareBox'></card>",
         controller : function($scope){
 
             //Default state of game start at 1.
@@ -311,10 +311,51 @@ app.service('GameService', function(){
 
 });
 
+app.directive('mode', function(){
+    return{
+        link: function(scope, element,attrs){
+            element.bind('click', function(){
+                scope.themeSelection = attrs.value;
+                element.parent().children().removeClass('modeClicked');
+                element.toggleClass('modeClicked');
+            });
+        }
+    }
+});
 
 
+app.directive('gameBox', function(){
+    return{
+        restrict: 'C',
+        link: function(scope, element){
+            var width = element[0].offsetWidth - 38;
+            var height = width;
+            element.css('height', height + 'px');
+        }
+    }
+});
 
+app.directive('squareBox', function(){
+    return{
+        restrict: 'C',
+        link: function(scope, element){
+            var width = element[0].offsetWidth;
+            var height = width;
+            element.css('height', height + 'px');
+        }
+    }
+});
 
+app.directive('parentHeight', function(){
+    return{
+        restrict: 'C',
+        link: function(scope, element){
+            var width = element.parent()[0].offsetHeight - 10;
+            var height = width;
+            element.css('height', height + 'px');
+        }
+    }
+});
 
 
 
